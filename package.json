@@ -4,15 +4,24 @@
   "description": "PostCSS plugin to generate a style guide automatically",
   "main": "index.js",
   "scripts": {
-    "test": ""
+    "test": "tape test.js"
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/morishitter/postcss-style-guide/git"
   },
-  "keywords": ["style-guide","postcss-plugins"],
+  "keywords": [
+    "style-guide",
+    "postcss-plugins"
+  ],
   "author": "Masaaki Morishita",
   "license": "MIT",
-  "dependencies": {},
-  "devDependencies": {}
+  "dependencies": {
+    "highlight.js": "^8.5.0",
+    "marked": "^0.3.3"
+  },
+  "devDependencies": {
+    "postcss": "^4.1.5",
+    "tape": "^4.0.0"
+  }
 }
