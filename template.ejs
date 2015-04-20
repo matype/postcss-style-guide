@@ -7,10 +7,10 @@
     </head>
     <body>
         <% maps.forEach(function (map) { %>
-        <div class="markdown"><%= map.html %></div>
-        <div class="selector"><%= rule.selector %></div>
+        <div class="markdown"><%- map.html %></div>
+        <div class="selector"><%= map.rule.selector %></div>
         <pre><code class="lang-css">
-            <% map.nodes.forEach(function (node) { %>
+            <% map.rule.nodes.forEach(function (node) { %>
             <% if (node.type === 'decl') { %>
             <%= node.prop %>: <%= node.value %>
             <% } %>

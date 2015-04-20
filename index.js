@@ -1,11 +1,14 @@
+var fs = require('fs')
 var marked = require('marked')
 marked.setOptions({
     highlight: function (code) {
         return require('highlight.js').highlightAuto(code).value;
     }
 })
+var ejs = require('ejs')
 
 var inspect = require('obj-inspector')
+var options
 
 module.exports = function plugin (options) {
     options = options || {}
@@ -16,10 +19,10 @@ module.exports = function plugin (options) {
             if (rule.type === 'rule' || rule.type === 'atrule') {
                 var prev = rule.prev()
                 if (prev.type === 'comment' && prev.parent.type === 'root') {
-                    var md = marked(prev.text)
+                    var html = marked(prev.text)
                     maps.push({
                         'rule': rule,
-                        'md': md
+                        'html': html
                     })
                 }
             }
@@ -34,7 +37,10 @@ module.exports = function plugin (options) {
 function generate (maps) {
     var template = importTemplate(options)
     var style = importStyle(options)
-    var html = ejs.render(template, maps)
+    var obj = {
+        maps: maps
+    }
+    var html = ejs.render(template, obj)
     fs.writeFile('styleguide.html', html, function (err) {
         if (err) {
             throw err
@@ -43,8 +49,8 @@ function generate (maps) {
     })
 }
 
-function importTemplate = function (options) {
-    if (options.template) {
+function importTemplate (options) {
+    if (options) {
         var template = fs.readFileSync(options.template, 'utf-8').trim()
     }
     else {
@@ -54,8 +60,8 @@ function importTemplate = function (options) {
     return template
 }
 
-function importStyle = function (options) {
-    if (options.style) {
+function importStyle (options) {
+    if (options) {
         var style = fs.readFileSync(options.style, 'utf-8').trim()
     }
     else {
