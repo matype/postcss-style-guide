@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Style Guide</title>
+        <link rel="stylesheet" href="./default.css">
+    </head>
+    <body>
+        <% maps.forEach(function (map) { %>
+        <div class="markdown"><%= map.html %></div>
+        <div class="selector"><%= rule.selector %></div>
+        <pre><code class="lang-css">
+            <% map.nodes.forEach(function (node) { %>
+            <% if (node.type === 'decl') { %>
+            <%= node.prop %>: <%= node.value %>
+            <% } %>
+            <% })%>
+        </code></pre>
+        <% })%>
+    </body>
+</html>
+
