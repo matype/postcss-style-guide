@@ -1,0 +1,9 @@
+/*
+# atrules
+*/
+
+@media (min-width: 480px) {
+    .btn {
+        padding: 5px 10px;
+    }
+}

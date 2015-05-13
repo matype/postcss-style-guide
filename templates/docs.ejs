@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Style Guide</title>
+        <link rel="stylesheet" href="./default.css">
+    </head>
+    <body>
+        <% maps.forEach(function (map) { %>
+            <div class="markdown"><%- map.html %></div>
+            <div class="selector"><%= map.rule.selector %></div>
+            <pre><code class="lang-css">
+                <% if (map.rule.type === 'rule') { %>
+                    <% map.rule.nodes.forEach(function (node) { %>
+                    <section class="content">
+                        <% if (node.type === 'decl') { %>
+                            <%= node.prop %>: <%= node.value %>
+                        <% } %>
+                    </section>
+                    <% })%>
+                <% } %>
+
+                <% if (map.rule.type === 'atrule') { %>
+                    <%= map.rule.name.trim() %>
+                    <%= map.rule.params.trim() %>
+                <% } %>
+            </code></pre>
+        <% })%>
+    </body>
+</html>
+

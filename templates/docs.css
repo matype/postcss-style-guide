@@ -1,0 +1,20 @@
+html {
+    box-sizing: border-box;
+}
+
+section.content {
+    border-bottom: 1px solid #dfe1e8;
+}
+
+.col-half {
+    width: 50%;
+}
+
+.cf:before,
+.cf:after {
+    content: " ";
+    display: table;
+}
+.cf:after {
+    clear: both;
+}

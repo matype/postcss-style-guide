@@ -1,1 +1,0 @@
-var postcssStyleGuide = require('./')

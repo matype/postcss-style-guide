@@ -1,14 +1,20 @@
 var fs = require('fs')
+
 var marked = require('marked')
 marked.setOptions({
     highlight: function (code) {
         return require('highlight.js').highlightAuto(code).value;
     }
 })
+
 var ejs = require('ejs')
+ejs.open = '{{'
+ejs.close = '}}'
+
+var resourcesDir = __dirname + '/templates/'
 
 var inspect = require('obj-inspector')
-var options
+
 
 module.exports = function plugin (options) {
     options = options || {}
@@ -28,13 +34,13 @@ module.exports = function plugin (options) {
             }
         })
 
-        generate(maps)
+        generate(maps, options)
 
         return root
     }
 }
 
-function generate (maps) {
+function generate (maps, options) {
     var template = importTemplate(options)
     var style = importStyle(options)
     var obj = {
@@ -50,23 +56,21 @@ function generate (maps) {
 }
 
 function importTemplate (options) {
-    if (options) {
+    if (options.template) {
         var template = fs.readFileSync(options.template, 'utf-8').trim()
     }
     else {
-        // var template = fs.readFileSync('./node_modules/postcss-style-guide/template.ejs', 'utf-8').trim()
-        var template = fs.readFileSync('./template.ejs', 'utf-8').trim()
+        var template = fs.readFileSync(resourcesDir + 'docs.ejs', 'utf-8').trim()
     }
     return template
 }
 
 function importStyle (options) {
-    if (options) {
+    if (options.style) {
         var style = fs.readFileSync(options.style, 'utf-8').trim()
     }
     else {
-        // var template = fs.readFileSync('./node_modules/postcss-style-guide/default.css', 'utf-8').trim()
-        var style = fs.readFileSync('./default.css', 'utf-8').trim()
+        var style = fs.readFileSync(resourcesDir + 'docs.css', 'utf-8').trim()
     }
     return style
 }
