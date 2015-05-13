@@ -52,6 +52,14 @@ Basic blue button.
 
 You will get `docs/xxx.html` for the style guide.
 
+## Options
+
+- `options.name`: Project name
+- `options.file`: CSS file name
+- `options.out`: Output directory name (default: "docs")
+- `options.template`: Custom template file (`.ejs`)
+- `options.stylel`: Custom stylesheet file (`.css`)
+
 ## License
 
 The MIT License (MIT)
