@@ -1,4 +1,6 @@
 var fs = require('fs')
+var ejs = require('ejs')
+var nano = require('cssnano')
 
 var marked = require('marked')
 marked.setOptions({
@@ -7,47 +9,45 @@ marked.setOptions({
     }
 })
 
-var ejs = require('ejs')
-ejs.open = '{{'
-ejs.close = '}}'
-
 var resourcesDir = __dirname + '/templates/'
-
-var inspect = require('obj-inspector')
-
 
 module.exports = function plugin (options) {
     options = options || {}
 
     var maps = []
     return function (root) {
+        var css = options.css !== undefined ? options.css : root.toString().trim()
+
         root.each(function (rule) {
             if (rule.type === 'rule' || rule.type === 'atrule') {
                 var prev = rule.prev()
                 if (prev.type === 'comment' && prev.parent.type === 'root') {
                     var html = marked(prev.text)
+                    var tmplRule = rule.toString().trim()
                     maps.push({
-                        'rule': rule,
-                        'html': html
+                        'rule': tmplRule,
+                        'html': html.trim()
                     })
                 }
             }
         })
 
-        generate(maps, options)
+        generate(maps, css, options)
 
         return root
     }
 }
 
-function generate (maps, options) {
+function generate (maps, css, options) {
+    var file = options.file || 'styleguide'
     var template = importTemplate(options)
     var style = importStyle(options)
     var obj = {
-        maps: maps
+        maps: maps,
+        css: nano(css)
     }
     var html = ejs.render(template, obj)
-    fs.writeFile('styleguide.html', html, function (err) {
+    fs.writeFile(file + '.html', html, function (err) {
         if (err) {
             throw err
         }
