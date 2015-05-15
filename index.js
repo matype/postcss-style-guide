@@ -1,11 +1,12 @@
 var fs = require('fs')
 var ejs = require('ejs')
 var nano = require('cssnano')
+var hl = require('highlight.js')
 
 var marked = require('marked')
 marked.setOptions({
     highlight: function (code) {
-        return require('highlight.js').highlightAuto(code).value;
+        return hl.highlightAuto(code).value;
     }
 })
 
@@ -25,7 +26,7 @@ module.exports = function plugin (options) {
                     var html = marked(prev.text)
                     var tmplRule = rule.toString().trim()
                     maps.push({
-                        'rule': tmplRule,
+                        'rule': hl.highlight('css', tmplRule).value,
                         'html': html.trim()
                     })
                 }
@@ -42,9 +43,11 @@ function generate (maps, css, options) {
     var file = options.file || 'styleguide'
     var template = importTemplate(options)
     var style = importStyle(options)
+    var codeStyle = fs.readFileSync(__dirname + '/node_modules/highlight.js/styles/github.css', 'utf-8').trim()
     var obj = {
         maps: maps,
-        css: nano(css)
+        css: nano(css),
+        codeStyle: nano(codeStyle)
     }
     var html = ejs.render(template, obj)
     fs.writeFile(file + '.html', html, function (err) {

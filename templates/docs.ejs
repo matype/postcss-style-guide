@@ -4,12 +4,12 @@
         <meta charset="UTF-8">
         <title>Style Guide</title>
         <link rel="stylesheet" href="./default.css">
-        <style><%- css %></style>
+        <style><%- codeStyle %><%- css %></style>
     </head>
     <body>
         <% maps.forEach(function (map) { %>
         <%- map.html %>
-        <pre><code class="lang-css"><%= map.rule %></code></pre>
+        <pre><code class="lang-css"><%- map.rule %></code></pre>
         <% })%>
     </body>
 </html>
