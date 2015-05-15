@@ -1,14 +1,9 @@
 var fs = require('fs')
 var ejs = require('ejs')
 var nano = require('cssnano')
-var hl = require('highlight.js')
 
-var marked = require('marked')
-marked.setOptions({
-    highlight: function (code) {
-        return hl.highlightAuto(code).value;
-    }
-})
+var mdParse = require('./lib/md_parse')
+var highlight = require('./lib/css_highlight')
 
 var resourcesDir = __dirname + '/templates/'
 
@@ -23,11 +18,10 @@ module.exports = function plugin (options) {
             if (rule.type === 'rule' || rule.type === 'atrule') {
                 var prev = rule.prev()
                 if (prev.type === 'comment' && prev.parent.type === 'root') {
-                    var html = marked(prev.text)
                     var tmplRule = rule.toString().trim()
                     maps.push({
-                        'rule': hl.highlight('css', tmplRule).value,
-                        'html': html.trim()
+                        'rule': highlight(tmplRule),
+                        'html': mdParse(prev.text)
                     })
                 }
             }
@@ -45,13 +39,15 @@ function generate (maps, css, options) {
     var template = importTemplate(options)
     var tmplStyle = importStyle(options)
     var codeStyle = fs.readFileSync(__dirname + '/node_modules/highlight.js/styles/github.css', 'utf-8').trim()
+
     var obj = {
-        maps: maps,
         projectName: project,
         css: nano(css),
         tmplStyle: nano(tmplStyle),
-        codeStyle: nano(codeStyle)
+        codeStyle: nano(codeStyle),
+        maps: maps
     }
+
     var html = ejs.render(template, obj)
     fs.writeFile(file + '.html', html, function (err) {
         if (err) {
