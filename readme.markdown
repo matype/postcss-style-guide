@@ -22,7 +22,7 @@ var options = {
     name: "Project name"
 };
 
-var output = postcss(css)
+var output = postcss()
     .use(styleGuide(options))
     .process(css)
     .css;
