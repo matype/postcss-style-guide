@@ -1,4 +1,5 @@
 var fs = require('fs')
+var postcss = require('postcss')
 var ejs = require('ejs')
 var nano = require('cssnano')
 
@@ -7,7 +8,7 @@ var highlight = require('./lib/css_highlight')
 
 var resourcesDir = __dirname + '/templates/'
 
-module.exports = function plugin (options) {
+module.exports = postcss.plugin('postcss-style-guide', function (options) {
     options = options || {}
 
     var maps = []
@@ -31,7 +32,7 @@ module.exports = function plugin (options) {
 
         return root
     }
-}
+})
 
 function generate (maps, css, options) {
     var file = options.file || 'styleguide'

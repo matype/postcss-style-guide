@@ -1,13 +1,13 @@
 /*
-# atrules
+# Write the explanatory text of the bellow rule set.
 
-hogehoge
+Basic blue button.
 
-```html
-<button class="btn btn-primary">Button</button>
-```
+    <button class="btn-blue">Button</button>
 */
 
-.btn {
-  padding: 5px 10px;
+.button-blue {
+  color: white;
+  background-color: var(--blue);
+  border-radius: var(--border-radius);
 }

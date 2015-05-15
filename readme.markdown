@@ -49,6 +49,8 @@ Basic blue button.
 
 You will get `styleguide.html` for the style guide.
 
+![Default style guide design](./style-guide-default.png)
+
 ## Options
 
 - `options.name`: Project name
