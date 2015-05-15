@@ -22,7 +22,7 @@ var options = {
     name: "Project name"
 };
 
-var output = postcss(css)
+var output = postcss()
     .use(styleGuide(options))
     .process(css)
     .css;
@@ -40,7 +40,7 @@ Basic blue button.
     <button class="btn-blue">Button</button>
 */
 
-.button-blue {
+.btn-blue {
   color: white;
   background-color: var(--blue);
   border-radius: var(--border-radius);
