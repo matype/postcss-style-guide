@@ -39,24 +39,20 @@ Basic blue button.
 
     <button class="btn-blue">Button</button>
 */
+
 .button-blue {
   color: white;
   background-color: var(--blue);
   border-radius: var(--border-radius);
 }
-
-.button-blue:hover {
-  opacity: .875;
-}
 ```
 
-You will get `docs/xxx.html` for the style guide.
+You will get `styleguide.html` for the style guide.
 
 ## Options
 
 - `options.name`: Project name
 - `options.file`: CSS file name
-- `options.out`: Output directory name (default: "docs")
 - `options.template`: Custom template file (`.ejs`)
 - `options.stylel`: Custom stylesheet file (`.css`)
 
