@@ -4,7 +4,7 @@ var postcss = require('postcss')
 var test = require('tape')
 
 var css = fs.readFileSync('test/fixture.css', 'utf-8')
-var res = postcss().use(styleGuide()).process(css).css.trim()
+var res = postcss().use(styleGuide({name: 'Project name'})).process(css).css.trim()
 
 var mdParse = require('../lib/md_parse')
 test('md_parse', function (t) {
