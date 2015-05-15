@@ -1,6 +1,6 @@
 {
   "name": "postcss-style-guide",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "PostCSS plugin to generate a style guide automatically",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,7 @@
   },
   "keywords": [
     "style-guide",
-    "postcss-plugins"
+    "postcss-plugin"
   ],
   "author": "Masaaki Morishita",
   "license": "MIT",
