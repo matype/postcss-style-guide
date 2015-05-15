@@ -54,7 +54,7 @@ You will get `styleguide.html` for the style guide.
 - `options.name`: Project name
 - `options.file`: CSS file name
 - `options.template`: Custom template file (`.ejs`)
-- `options.stylel`: Custom stylesheet file (`.css`)
+- `options.style`: Custom stylesheet file (`.css`)
 
 ## License
 
