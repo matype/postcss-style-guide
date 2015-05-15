@@ -51,6 +51,8 @@ You will get `styleguide.html` for the style guide.
 
 ![Default style guide design](./style-guide-default.png)
 
+Inspired by [http://codeguide.co/](http://codeguide.co/)
+
 ## Options
 
 - `options.name`: Project name
