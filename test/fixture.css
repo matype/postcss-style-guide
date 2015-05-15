@@ -1,9 +1,13 @@
 /*
 # atrules
+
+hogehoge
+
+```html
+<button class="btn btn-primary">Button</button>
+```
 */
 
-@media (min-width: 480px) {
-    .btn {
-        padding: 5px 10px;
-    }
+.btn {
+  padding: 5px 10px;
 }

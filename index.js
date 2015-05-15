@@ -41,12 +41,15 @@ module.exports = function plugin (options) {
 
 function generate (maps, css, options) {
     var file = options.file || 'styleguide'
+    var project = options.name || 'Style Guide'
     var template = importTemplate(options)
-    var style = importStyle(options)
+    var tmplStyle = importStyle(options)
     var codeStyle = fs.readFileSync(__dirname + '/node_modules/highlight.js/styles/github.css', 'utf-8').trim()
     var obj = {
         maps: maps,
+        projectName: project,
         css: nano(css),
+        tmplStyle: nano(tmplStyle),
         codeStyle: nano(codeStyle)
     }
     var html = ejs.render(template, obj)
