@@ -83,7 +83,7 @@ code {
 
 pre {
   display: block;
-  margin: 0 0 1rem;
+  margin: 1rem 0 ;
   line-height: 1.4;
   white-space: pre;
   white-space: pre-wrap;
