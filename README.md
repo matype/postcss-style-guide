@@ -1,6 +1,6 @@
 # postcss-style-guide [![Build Status](https://travis-ci.org/morishitter/postcss-style-guide.svg)](https://travis-ci.org/morishitter/postcss-style-guide)
 
-PostCSS plugin to generate a style guide automatically.
+[PostCSS](https://github.com/postcss/postcss) plugin to generate a style guide automatically.
 
 CSS comments will be parsed through Markdown and displayed in a generated HTML document.
 
@@ -10,7 +10,9 @@ CSS comments will be parsed through Markdown and displayed in a generated HTML d
 $ npm install postcss-style-guide
 ```
 
-## Example
+## Usage
+
+Node.js:
 
 ```js
 var fs = require('fs');
@@ -26,6 +28,23 @@ var output = postcss()
     .use(styleGuide(options))
     .process(css)
     .css;
+```
+
+in [Gulp](https://github.com/gulpjs/gulp):
+
+```js
+var gulp = require('gulp');
+
+gulp.task('default', function () {
+    var postcss = require('gulp-postcss');
+    return gulp.src('src/*.css')
+        .pipe(postcss([
+            require('postcss-style-guide')({
+                name: "Project name"
+            })
+        ]))
+        .pipe(gulp.dest('build/'));
+});
 ```
 
 Using this `input.css`:
@@ -72,7 +91,7 @@ You will get `styleguide.html` for the style guide.
 
 ![Default style guide design](./style-guide-default.png)
 
-Inspired by [http://codeguide.co/](http://codeguide.co/)
+Default template design is inspired by [http://codeguide.co/](http://codeguide.co/)
 
 ## Options
 
