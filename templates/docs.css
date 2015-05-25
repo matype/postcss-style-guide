@@ -3,17 +3,17 @@
  */
 
 html {
-  font-size: 16px;
+  font-size: 20px;
 }
-@media (min-width: 48em) {
+@media (max-width: 48rem) {
   html {
-    font-size: 20px;
+    font-size: 18px;
   }
 }
 
 body {
   margin: 0;
-  font: 1rem/1.5 "PT Sans", sans-serif;
+  font-family: "PT Sans", sans-serif;
   color: #5a5a5a;
 }
 
@@ -88,6 +88,11 @@ pre {
   white-space: pre;
   white-space: pre-wrap;
 }
+
+pre.code {
+  margin-top: 0;
+}
+
 pre code {
   padding: 0;
   color: inherit;
