@@ -31,20 +31,41 @@ var output = postcss()
 Using this `input.css`:
 
 ```css
-
 /*
-# Write the explanatory text of the bellow rule set.
+# I love Twitter Bootstrap
 
-Basic blue button.
+Use the button classes on an `<a>`, `<button>`, `<input>` element.
 
-    <button class="btn-blue">Button</button>
+<button class="btn">Button</button>
+
+    <button class="btn">Button</button>
+
 */
 
-.btn-blue {
-  color: white;
-  background-color: var(--blue);
-  border-radius: var(--border-radius);
+.btn {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
 }
+.btn:hover,
+.btn:focus,
+.btn.focus {
+  color: #333;
+  text-decoration: none;
+}
+
 ```
 
 You will get `styleguide.html` for the style guide.
