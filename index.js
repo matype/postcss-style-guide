@@ -15,16 +15,23 @@ module.exports = postcss.plugin('postcss-style-guide', function (options) {
     return function (root) {
         var css = options.css !== undefined ? options.css : root.toString().trim()
 
-        root.each(function (rule) {
-            if (rule.type === 'rule' || rule.type === 'atrule') {
-                var prev = rule.prev()
-                if (prev.type === 'comment' && prev.parent.type === 'root') {
-                    var tmplRule = rule.toString().trim()
-                    maps.push({
-                        'rule': highlight(tmplRule),
-                        'html': mdParse(prev.text)
-                    })
+        root.eachComment(function (comment) {
+            if (comment.parent.type === 'root') {
+                var rule = comment.next()
+                var tmp = []
+                while (rule !== null && rule.type === 'rule') {
+                    if (rule.type === 'rule' || rule.type === 'atrule') {
+                        tmp.push(rule.toString().trim())
+                    }
+
+                    rule = rule.next() || null
                 }
+
+                var tmplRule = tmp.join('\n')
+                maps.push({
+                    rule: highlight(tmplRule),
+                    html: mdParse(comment.text)
+                })
             }
         })
 
