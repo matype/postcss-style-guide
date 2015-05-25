@@ -1,3 +1,7 @@
+## 0.2.1
+
+* Tweak template design
+
 ## 0.2
 
 * Change logic of generating style guide
