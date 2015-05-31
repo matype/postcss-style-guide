@@ -5,7 +5,7 @@ var test = require('tape')
 
 var css = fs.readFileSync('test/fixture.css', 'utf-8')
 var options = {
-    name: 'Project name',
+    name: 'Default theme',
 }
 var res = postcss().use(styleGuide(options)).process(css).css.trim()
 

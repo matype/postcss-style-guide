@@ -24,6 +24,7 @@
     "postcss": "^4.1.5"
   },
   "devDependencies": {
+    "psg-theme-default": "^0.1.0",
     "tape": "^4.0.0"
   }
 }

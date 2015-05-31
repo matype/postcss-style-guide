@@ -53,7 +53,7 @@ module.exports = postcss.plugin('postcss-style-guide', function (options) {
 function generate (maps, css, options) {
     var codeStyle = fs.readFileSync(__dirname + '/node_modules/highlight.js/styles/github.css', 'utf-8').trim()
 
-    var obj = {
+    var assign = {
         projectName: options.name,
         css: nano(css),
         tmplStyle: nano(options.style),
@@ -61,7 +61,7 @@ function generate (maps, css, options) {
         maps: maps
     }
 
-    var html = ejs.render(options.template, obj)
+    var html = ejs.render(options.template, assign)
     fs.writeFile(options.file + '.html', html, function (err) {
         if (err) {
             throw err

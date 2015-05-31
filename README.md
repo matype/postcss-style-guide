@@ -95,10 +95,9 @@ Default template design is inspired by [http://codeguide.co/](http://codeguide.c
 
 ## Options
 
+- `options.theme`: Theme name
 - `options.name`: Project name
-- `options.file`: CSS file name
-- `options.template`: Custom template file (`.ejs`)
-- `options.style`: Custom stylesheet file (`.css`)
+- `options.file`: Style guide file name
 
 ## License
 
