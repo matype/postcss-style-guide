@@ -6,14 +6,23 @@ var nano = require('cssnano')
 var mdParse = require('./lib/md_parse')
 var highlight = require('./lib/css_highlight')
 
-var resourcesDir = __dirname + '/templates/'
-
 module.exports = postcss.plugin('postcss-style-guide', function (options) {
+
     options = options || {}
+
+    options.theme = options.theme !== undefined ? options.theme : 'default'
+    options.name = options.name !== undefined ? options.name : 'Style Guide'
+    options.file = options.file !== undefined ? options.file : 'styleguide'
+
+    var themeName = 'psg-theme-' + options.theme
+    var themePath = __dirname + '/node_modules/' + themeName
+
+    options.template = fs.readFileSync(themePath + '/template.ejs', 'utf-8').trim()
+    options.style = fs.readFileSync(themePath + '/style.css', 'utf-8').trim()
 
     var maps = []
     return function (root) {
-        var css = options.css !== undefined ? options.css : root.toString().trim()
+        var css = root.toString().trim()
 
         root.eachComment(function (comment) {
             if (comment.parent.type === 'root') {
@@ -42,45 +51,21 @@ module.exports = postcss.plugin('postcss-style-guide', function (options) {
 })
 
 function generate (maps, css, options) {
-    var file = options.file || 'styleguide'
-    var project = options.name || 'Style Guide'
-    var template = importTemplate(options)
-    var tmplStyle = importStyle(options)
     var codeStyle = fs.readFileSync(__dirname + '/node_modules/highlight.js/styles/github.css', 'utf-8').trim()
 
     var obj = {
-        projectName: project,
+        projectName: options.name,
         css: nano(css),
-        tmplStyle: nano(tmplStyle),
+        tmplStyle: nano(options.style),
         codeStyle: nano(codeStyle),
         maps: maps
     }
 
-    var html = ejs.render(template, obj)
-    fs.writeFile(file + '.html', html, function (err) {
+    var html = ejs.render(options.template, obj)
+    fs.writeFile(options.file + '.html', html, function (err) {
         if (err) {
             throw err
         }
         console.log('Successed to generate style guide')
     })
-}
-
-function importTemplate (options) {
-    if (options.template) {
-        var template = fs.readFileSync(options.template, 'utf-8').trim()
-    }
-    else {
-        var template = fs.readFileSync(resourcesDir + 'docs.ejs', 'utf-8').trim()
-    }
-    return template
-}
-
-function importStyle (options) {
-    if (options.style) {
-        var style = fs.readFileSync(options.style, 'utf-8').trim()
-    }
-    else {
-        var style = fs.readFileSync(resourcesDir + 'docs.css', 'utf-8').trim()
-    }
-    return style
 }
