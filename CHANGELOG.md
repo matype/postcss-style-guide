@@ -1,3 +1,8 @@
+## 0.3.0
+
+* Introdue themes
+* Initialize a document for building themes
+
 ## 0.2.1
 
 * Tweak template design
