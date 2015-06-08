@@ -15,7 +15,7 @@ module.exports = postcss.plugin('postcss-style-guide', function (options) {
     options.file = options.file !== undefined ? options.file : 'styleguide'
 
     var themeName = 'psg-theme-' + options.theme
-    var themePath = __dirname + '/node_modules/' + themeName
+    var themePath = '../' + themeName
 
     options.template = fs.readFileSync(themePath + '/template.ejs', 'utf-8').trim()
     options.style = fs.readFileSync(themePath + '/style.css', 'utf-8').trim()
