@@ -91,13 +91,21 @@ You will get `styleguide.html` for the style guide.
 
 ![Default style guide design](./style-guide-default.png)
 
-Default template design is inspired by [http://codeguide.co/](http://codeguide.co/)
+Default template design is inspired by [http://codeguide.co/](http://codeguide.co/).
 
 ## Options
 
 - `options.theme`: Theme name
 - `options.name`: Project name
 - `options.file`: Style guide file name
+
+## Themes
+
+You can select a theme of style guide with `options.theme`.
+And you can also create original themes.
+When you create themes, please read [theme guideline](https://github.com/morishitter/postcss-style-guide/blob/master/docs/theme-guideline.md)
+
+All of postcss-style-guide themes that can be used are [here](https://www.npmjs.com/search?q=psg-theme).
 
 ## License
 
