@@ -1,3 +1,7 @@
+## 0.3.1
+
+* Fix a [bug](https://github.com/morishitter/postcss-style-guide/issues/9)
+
 ## 0.3.0
 
 * Introdue themes
