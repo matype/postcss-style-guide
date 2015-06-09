@@ -36,6 +36,14 @@ The template extension of `postcss-style-guide` must be named `template.ejs` fil
 - Template: `template.ejs`
 - Stylesheet: `style.css`
 
-#### Set keyword in `package.json`
+### Set keyword in `package.json`
 
 Themes of `postcss-style-guide` must have the `psg-theme` keyword in their `package.json`.
+
+### Screenshot image for example
+
+You should put a screenshot image for example.
+
+like this:
+
+![Default style guide design](../style-guide-default.png)
