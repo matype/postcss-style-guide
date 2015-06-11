@@ -1,13 +1,7 @@
 /*
-# Write the explanatory text of the bellow rule set.
-
-Basic blue button.
-
-    <button class="btn-blue">Button</button>
+# h1
 */
 
-.button-blue {
-  color: white;
-  background-color: var(--blue);
-  border-radius: var(--border-radius);
+a {
+  color: blue;
 }
