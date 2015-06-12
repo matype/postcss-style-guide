@@ -1,6 +1,7 @@
 var styleGuide = require('../')
 var fs = require('fs')
 var postcss = require('postcss')
+var cssnext = require('cssnext')
 var test = require('tape')
 
 var css = fs.readFileSync('test/fixture.css', 'utf-8')
@@ -8,9 +9,13 @@ var options = {
     name: 'Default theme',
 }
 
+postcss()
+    .use(styleGuide('test/fixture.css', options))
+    .use(cssnext())
+    .process(css)
+    .css.trim()
 
 test('exist styleguide.html', function (t) {
-    postcss().use(styleGuide(options)).process(css).css.trim()
     var actual = fs.existsSync('styleguide.html')
 
     t.same(actual, true)

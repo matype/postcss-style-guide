@@ -25,6 +25,7 @@
     "psg-theme-default": "^0.1.0"
   },
   "devDependencies": {
+    "cssnext": "^1.6.0",
     "tape": "^4.0.0"
   }
 }
