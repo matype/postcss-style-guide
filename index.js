@@ -34,11 +34,8 @@ module.exports = postcss.plugin('postcss-style-guide', function (processedCSS, o
             if (comment.parent.type === 'root') {
                 var rule = comment.next()
                 var tmp = []
-                while (rule !== null && rule.type === 'rule') {
-                    if (rule.type === 'rule' || rule.type === 'atrule') {
-                        tmp.push(rule.toString().trim())
-                    }
-
+                while (rule !== null && (rule.type === 'rule' || rule.type === 'atrule')) {
+                    tmp.push(rule.toString().trim())
                     rule = rule.next() || null
                 }
 
