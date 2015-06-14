@@ -6,10 +6,9 @@ var nano = require('cssnano')
 var mdParse = require('./lib/md_parse')
 var highlight = require('./lib/css_highlight')
 
-module.exports = postcss.plugin('postcss-style-guide', function (options) {
+module.exports = postcss.plugin('postcss-style-guide', function (processedCSS, options) {
 
     options = options || {}
-
     options.theme = options.theme !== undefined ? options.theme : 'default'
     options.name = options.name !== undefined ? options.name : 'Style Guide'
     options.file = options.file !== undefined ? options.file : 'styleguide'
@@ -28,17 +27,15 @@ module.exports = postcss.plugin('postcss-style-guide', function (options) {
 
     var maps = []
     return function (root) {
-        var css = root.toString().trim()
+        var css = fs.readFileSync(processedCSS, 'utf-8')
+        var rootStyle = root.toString().trim()
 
         root.eachComment(function (comment) {
             if (comment.parent.type === 'root') {
                 var rule = comment.next()
                 var tmp = []
-                while (rule !== null && rule.type === 'rule') {
-                    if (rule.type === 'rule' || rule.type === 'atrule') {
-                        tmp.push(rule.toString().trim())
-                    }
-
+                while (rule !== null && (rule.type === 'rule' || rule.type === 'atrule')) {
+                    tmp.push(rule.toString().trim())
                     rule = rule.next() || null
                 }
 
@@ -50,18 +47,19 @@ module.exports = postcss.plugin('postcss-style-guide', function (options) {
             }
         })
 
-        generate(maps, css, options)
+        generate(maps, css, rootStyle, options)
 
         return root
     }
 })
 
-function generate (maps, css, options) {
+function generate (maps, css, rootStyle, options) {
     var codeStyle = fs.readFileSync(__dirname + '/node_modules/highlight.js/styles/github.css', 'utf-8').trim()
 
     var assign = {
         projectName: options.name,
-        css: nano(css),
+        processedCSS: nano(css),
+        rootStyle: nano(rootStyle),
         tmplStyle: nano(options.style),
         codeStyle: nano(codeStyle),
         maps: maps
