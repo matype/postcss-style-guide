@@ -1,3 +1,8 @@
+## 0.4.0
+
+- Intoroduce processed CSS as first parameter
+- Fix some bugs
+
 ## 0.3.1
 
 * Fix a [bug](https://github.com/morishitter/postcss-style-guide/issues/9)
