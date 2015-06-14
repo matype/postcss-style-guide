@@ -20,12 +20,14 @@ var postcss = require('postcss');
 var styleGuide = require('postcss-style-guide');
 
 var css = fs.readFileSync('input.css', 'utf-8');
+var processedCSS = fs.readFileSync('output.css', 'utf-8');
+
 var options = {
     name: "Project name"
 };
 
 var output = postcss()
-    .use(styleGuide(options))
+    .use(styleGuide(processedCSS, options))
     .process(css)
     .css;
 ```
@@ -37,9 +39,10 @@ var gulp = require('gulp');
 
 gulp.task('default', function () {
     var postcss = require('gulp-postcss');
+    var processedCSS = fs.readFileSync('output.css', 'utf-8');
     return gulp.src('src/*.css')
         .pipe(postcss([
-            require('postcss-style-guide')({
+            require('postcss-style-guide')(processedCSS, {
                 name: "Project name"
             })
         ]))
