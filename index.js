@@ -19,7 +19,7 @@ module.exports = postcss.plugin('postcss-style-guide', function (processedCSS, o
         themePath = __dirname + '/node_modules/' + themeName
     }
     else {
-        themePath = '../' + themeName
+        themePath = 'node_modules/' + themeName
     }
 
     options.template = fs.readFileSync(themePath + '/template.ejs', 'utf-8').trim()
