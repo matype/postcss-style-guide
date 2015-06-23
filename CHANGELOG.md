@@ -1,3 +1,7 @@
+## 0.4.1
+
+- Fix a bug to use other postcss-style-guide themes
+
 ## 0.4.0
 
 - Intoroduce processed CSS as first parameter
