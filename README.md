@@ -110,6 +110,17 @@ When you create themes, please read [theme guideline](https://github.com/morishi
 
 All of postcss-style-guide themes that can be used are [here](https://www.npmjs.com/search?q=psg-theme).
 
+### Themes list
+
+- [default](https://github.com/morishitter/psg-theme-default)
+- [sassline](https://github.com/sotayamashita/psg-theme-sassline)
+- [1column](https://github.com/seka/psg-theme-1column)
+- [forest](https://github.com/morishitter/psg-theme-forest)
+
+### How to develop postcss-style-guide theme
+
+- [Yeoman Generator](https://github.com/sotayamashita/generator-psg-theme)
+
 ## License
 
 The MIT License (MIT)
