@@ -20,7 +20,7 @@ var postcss = require('postcss');
 var styleGuide = require('postcss-style-guide');
 
 var css = fs.readFileSync('input.css', 'utf-8');
-var processedCSS = fs.readFileSync('output.css', 'utf-8');
+var processedCSS = 'output.css';
 
 var options = {
     name: "Project name"
@@ -39,7 +39,7 @@ var gulp = require('gulp');
 
 gulp.task('default', function () {
     var postcss = require('gulp-postcss');
-    var processedCSS = fs.readFileSync('output.css', 'utf-8');
+    var processedCSS = 'output.css';
     return gulp.src('src/*.css')
         .pipe(postcss([
             require('postcss-style-guide')(processedCSS, {
