@@ -27,7 +27,6 @@ module.exports = postcss.plugin('postcss-style-guide', function (processedCSS, o
 
     var maps = []
     return function (root) {
-        var css = fs.readFileSync(processedCSS, 'utf-8')
         var rootStyle = root.toString().trim()
 
         root.eachComment(function (comment) {
@@ -47,7 +46,7 @@ module.exports = postcss.plugin('postcss-style-guide', function (processedCSS, o
             }
         })
 
-        generate(maps, css, rootStyle, options)
+        generate(maps, processedCSS, rootStyle, options)
 
         return root
     }

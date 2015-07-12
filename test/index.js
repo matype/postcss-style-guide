@@ -10,7 +10,7 @@ var options = {
 }
 
 postcss()
-    .use(styleGuide('test/fixture.css', options))
+    .use(styleGuide(css, options))
     .use(cssnext())
     .process(css)
     .css.trim()
