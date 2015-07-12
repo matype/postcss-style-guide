@@ -20,7 +20,7 @@ var postcss = require('postcss');
 var styleGuide = require('postcss-style-guide');
 
 var css = fs.readFileSync('input.css', 'utf-8');
-var processedCSS = fs.readFileSync('output.css');
+var processedCSS = fs.readFileSync('output.css', 'utf-8');
 
 var options = {
     name: "Project name"
