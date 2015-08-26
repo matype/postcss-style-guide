@@ -69,6 +69,6 @@ function generate (maps, css, rootStyle, options) {
         if (err) {
             throw err
         }
-        console.log('Successed to generate style guide')
+        console.log('Successfully created style guide!')
     })
 }
