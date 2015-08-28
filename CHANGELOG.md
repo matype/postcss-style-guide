@@ -1,3 +1,7 @@
+## 0.5.1
+
+- Fix #17
+
 ## 0.5.0
 
 - Update PostCSS to v5.0
