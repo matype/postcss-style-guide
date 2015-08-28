@@ -8,6 +8,10 @@ var highlight = require('./lib/css_highlight')
 
 module.exports = postcss.plugin('postcss-style-guide', function (processedCSS, options) {
 
+    if (arguments[0] === 'object') {
+        options = arguments[0]
+    }
+
     options = options || {}
     options.theme = options.theme !== undefined ? options.theme : 'default'
     options.name = options.name !== undefined ? options.name : 'Style Guide'
@@ -27,9 +31,10 @@ module.exports = postcss.plugin('postcss-style-guide', function (processedCSS, o
 
     var maps = []
     return function (root) {
+
         var rootStyle = root.toString().trim()
 
-        root.eachComment(function (comment) {
+        root.walkComments(function (comment) {
             if (comment.parent.type === 'root') {
                 var rule = comment.next()
                 var tmp = []
@@ -45,6 +50,10 @@ module.exports = postcss.plugin('postcss-style-guide', function (processedCSS, o
                 })
             }
         })
+
+        if (arguments[0] !== 'object') {
+            processedCSS = rootStyle
+        }
 
         generate(maps, processedCSS, rootStyle, options)
 
