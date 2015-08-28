@@ -8,7 +8,7 @@ var highlight = require('./lib/css_highlight')
 
 module.exports = postcss.plugin('postcss-style-guide', function (processedCSS, options) {
 
-    if (arguments[0] === 'object') {
+    if (typeof(arguments[0]) === 'object') {
         options = arguments[0]
     }
 
