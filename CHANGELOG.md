@@ -1,3 +1,8 @@
+## 0.5.0
+
+- Update PostCSS to v5.0
+- Fix to check parameters
+
 ## 0.4.1
 
 - Fix a bug to use other postcss-style-guide themes
