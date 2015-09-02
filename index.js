@@ -67,10 +67,16 @@ function generate (maps, css, rootStyle, options) {
     var assign = {
         projectName: options.name,
         processedCSS: nano(css),
-        rootStyle: nano(rootStyle),
         tmplStyle: nano(options.style),
         codeStyle: nano(codeStyle),
         maps: maps
+    }
+
+    if (options.showCode) {
+      assign.rootStyle = nano(rootStyle)
+    }
+    else {
+      assign.rootStyle = null
     }
 
     var html = ejs.render(options.template, assign)

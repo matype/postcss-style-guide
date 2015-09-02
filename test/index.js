@@ -1,7 +1,6 @@
 var styleGuide = require('../')
 var fs = require('fs')
 var postcss = require('postcss')
-var cssnext = require('cssnext')
 var test = require('tape')
 
 var css = fs.readFileSync('test/fixture.css', 'utf-8')
@@ -11,7 +10,6 @@ var options = {
 
 postcss()
     .use(styleGuide(css, options))
-    .use(cssnext())
     .process(css)
     .css.trim()
 
