@@ -16,6 +16,7 @@ module.exports = postcss.plugin('postcss-style-guide', function (processedCSS, o
     options.theme = options.theme !== undefined ? options.theme : 'default'
     options.name = options.name !== undefined ? options.name : 'Style Guide'
     options.file = options.file !== undefined ? options.file : 'styleguide'
+    options.showCode = options.showCode !== undefined ? options.showCode : true
 
     var themeName = 'psg-theme-' + options.theme
     var themePath
@@ -31,8 +32,6 @@ module.exports = postcss.plugin('postcss-style-guide', function (processedCSS, o
 
     var maps = []
     return function (root) {
-
-        var rootStyle = root.toString().trim()
 
         root.walkComments(function (comment) {
             if (comment.parent.type === 'root') {
@@ -52,16 +51,16 @@ module.exports = postcss.plugin('postcss-style-guide', function (processedCSS, o
         })
 
         if (arguments[0] !== 'object') {
-            processedCSS = rootStyle
+            processedCSS = root.toString().trim()
         }
 
-        generate(maps, processedCSS, rootStyle, options)
+        generate(maps, processedCSS, options)
 
         return root
     }
 })
 
-function generate (maps, css, rootStyle, options) {
+function generate (maps, css, options) {
     var codeStyle = fs.readFileSync(__dirname + '/node_modules/highlight.js/styles/github.css', 'utf-8').trim()
 
     var assign = {
@@ -69,14 +68,8 @@ function generate (maps, css, rootStyle, options) {
         processedCSS: nano(css),
         tmplStyle: nano(options.style),
         codeStyle: nano(codeStyle),
+        showCode: options.showCode,
         maps: maps
-    }
-
-    if (options.showCode) {
-      assign.rootStyle = nano(rootStyle)
-    }
-    else {
-      assign.rootStyle = null
     }
 
     var html = ejs.render(options.template, assign)

@@ -2,6 +2,12 @@
 # h1
 
 cssnext is awesome
+
+```html
+<p class="class">hogehoge</p>
+```
+<p class="class">hogehoge</p>
+
 */
 :root {
     --mainColor: #ffbbaaff;
