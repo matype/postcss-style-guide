@@ -1,3 +1,8 @@
+## 0.6.0
+
+- Remove `rootStyle`
+- Add `showCode` option
+
 ## 0.5.1
 
 - Fix #17
