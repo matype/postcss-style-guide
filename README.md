@@ -101,6 +101,7 @@ Default template design is inspired by [http://codeguide.co/](http://codeguide.c
 - `options.theme`: Theme name
 - `options.name`: Project name
 - `options.file`: Style guide file name
+- `options.showCode`: The flag to show CSS code. Default is `true`.
 
 ## Themes
 
