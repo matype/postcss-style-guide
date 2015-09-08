@@ -19,16 +19,17 @@ var fs = require('fs');
 var postcss = require('postcss');
 var styleGuide = require('postcss-style-guide');
 
-var css = fs.readFileSync('input.css', 'utf-8');
-var processedCSS = fs.readFileSync('output.css', 'utf-8');
+var input = fs.readFileSync('input.css', 'utf-8');
+var processed = fs.readFileSync('output.css', 'utf-8');
 
 var options = {
-    name: "Project name"
+    name: "Project name",
+    processedCSS: processedCSS
 };
 
 var output = postcss()
-    .use(styleGuide(processedCSS, options))
-    .process(css)
+    .use(styleGuide(processed))
+    .process(input)
     .css;
 ```
 
@@ -42,8 +43,9 @@ gulp.task('default', function () {
     var processedCSS = fs.readFileSync('output.css', 'utf-8');
     return gulp.src('src/*.css')
         .pipe(postcss([
-            require('postcss-style-guide')(processedCSS, {
-                name: "Project name"
+            require('postcss-style-guide')({
+                name: "Project name",
+                processedCSS: processedCSS
             })
         ]))
         .pipe(gulp.dest('build/'));
