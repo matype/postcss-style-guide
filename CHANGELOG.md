@@ -1,3 +1,7 @@
+## 0.7.0
+
+- Moved `processedCSS` parameter in `options`
+
 ## 0.6.0
 
 - Remove `rootStyle`
