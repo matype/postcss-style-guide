@@ -6,7 +6,7 @@ var nano = require('cssnano')
 var mdParse = require('./lib/md_parse')
 var highlight = require('./lib/css_highlight')
 
-module.exports = postcss.plugin('postcss-style-guide', function (processedCSS, options) {
+module.exports = postcss.plugin('postcss-style-guide', function (options) {
 
     if (typeof(arguments[0]) === 'object') {
         options = arguments[0]
@@ -32,6 +32,7 @@ module.exports = postcss.plugin('postcss-style-guide', function (processedCSS, o
 
     var maps = []
     return function (root) {
+        options.processedCSS = options.processedCSS !== undefined ? options.processedCSS : root.toString().trim()
 
         root.walkComments(function (comment) {
             if (comment.parent.type === 'root') {
@@ -54,7 +55,7 @@ module.exports = postcss.plugin('postcss-style-guide', function (processedCSS, o
             processedCSS = root.toString().trim()
         }
 
-        generate(maps, processedCSS, options)
+        generate(maps, options.processedCSS, options)
 
         return root
     }
