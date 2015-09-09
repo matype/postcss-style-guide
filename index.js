@@ -55,29 +55,31 @@ module.exports = postcss.plugin('postcss-style-guide', function (options) {
             processedCSS = root.toString().trim()
         }
 
-        generate(maps, options.processedCSS, options)
+        generate(maps, options)
 
         return root
     }
 })
 
-function generate (maps, css, options) {
+function generate (maps, options) {
     var codeStyle = fs.readFileSync(__dirname + '/node_modules/highlight.js/styles/github.css', 'utf-8').trim()
 
-    var assign = {
-        projectName: options.name,
-        processedCSS: nano(css),
-        tmplStyle: nano(options.style),
-        codeStyle: nano(codeStyle),
-        showCode: options.showCode,
-        maps: maps
-    }
-
-    var html = ejs.render(options.template, assign)
-    fs.writeFile(options.file + '.html', html, function (err) {
-        if (err) {
-            throw err
+    Promise.resolve().then(function (result) {
+        var assign = {
+            projectName: options.name,
+            processedCSS: nano.process(options.processedCSS),
+            tmplStyle: nano.process(options.style),
+            codeStyle: nano.process(codeStyle),
+            showCode: options.showCode,
+            maps: maps
         }
-        console.log('Successfully created style guide!')
+
+        var html = ejs.render(options.template, assign)
+        fs.writeFile(options.file + '.html', html, function (err) {
+            if (err) {
+                throw err
+            }
+            console.log('Successfully created style guide!')
+        })
     })
 }
