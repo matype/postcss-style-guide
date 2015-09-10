@@ -1,3 +1,7 @@
+## 0.8.0
+
+- Introduce `options.dir`
+
 ## 0.7.1
 
 - Bump cssnanot to v3
