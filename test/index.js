@@ -17,7 +17,7 @@ postcss()
     .css.trim()
 
 test('exist styleguide.html', function (t) {
-    var actual = fs.existsSync('styleguide.html')
+    var actual = fs.existsSync('styleguide/index.html')
 
     t.same(actual, true)
     t.end()
