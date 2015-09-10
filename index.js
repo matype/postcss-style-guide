@@ -1,7 +1,9 @@
 var fs = require('fs')
+var path = require('path')
 var postcss = require('postcss')
 var ejs = require('ejs')
 var nano = require('cssnano')
+var mkdirp = require('mkdirp')
 
 var mdParse = require('./lib/md_parse')
 var highlight = require('./lib/css_highlight')
@@ -16,6 +18,7 @@ module.exports = postcss.plugin('postcss-style-guide', function (options) {
     options.theme = options.theme !== undefined ? options.theme : 'default'
     options.name = options.name !== undefined ? options.name : 'Style Guide'
     options.file = options.file !== undefined ? options.file : 'styleguide'
+    options.dir = options.dir !== undefined ? options.dir : 'docs'
     options.showCode = options.showCode !== undefined ? options.showCode : true
 
     var themeName = 'psg-theme-' + options.theme
@@ -80,7 +83,16 @@ function generate (maps, options) {
         }
 
         var html = ejs.render(options.template, params)
-        fs.writeFile(options.file + '.html', html, function (err) {
+        mkdirp(options.dir, function (err) {
+            if (err) {
+                throw err
+            }
+        })
+        var fileName = options.file
+        if (!path.extname(options.file)) {
+            fileName = fileName + '.html'
+        }
+        fs.writeFile(options.dir + '/' + fileName, html, function (err) {
             if (err) {
                 throw err
             }

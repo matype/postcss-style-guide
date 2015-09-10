@@ -6,6 +6,8 @@ var test = require('tape')
 var css = fs.readFileSync('test/fixture.css', 'utf-8')
 var options = {
     name: 'Default theme',
+    dir: 'styleguide',
+    file: 'index.html',
     processedCSS: css
 }
 
