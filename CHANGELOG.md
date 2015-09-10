@@ -1,3 +1,7 @@
+## 0.7.1
+
+- Bump cssnanot to v3
+
 ## 0.7.0
 
 - Moved `processedCSS` parameter in `options`
