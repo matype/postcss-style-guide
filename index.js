@@ -64,17 +64,22 @@ module.exports = postcss.plugin('postcss-style-guide', function (options) {
 function generate (maps, options) {
     var codeStyle = fs.readFileSync(__dirname + '/node_modules/highlight.js/styles/github.css', 'utf-8').trim()
 
-    Promise.resolve().then(function (result) {
-        var assign = {
+    Promise.all([
+        nano.process(options.processedCSS),
+        nano.process(options.style),
+        nano.process(codeStyle)
+    ]).then(function (result) {
+
+        var params = {
             projectName: options.name,
-            processedCSS: nano.process(options.processedCSS),
-            tmplStyle: nano.process(options.style),
-            codeStyle: nano.process(codeStyle),
+            processedCSS: result.shift().css,
+            tmplStyle: result.shift().css,
+            codeStyle: result.shift().css,
             showCode: options.showCode,
             maps: maps
         }
 
-        var html = ejs.render(options.template, assign)
+        var html = ejs.render(options.template, params)
         fs.writeFile(options.file + '.html', html, function (err) {
             if (err) {
                 throw err
