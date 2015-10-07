@@ -23,18 +23,3 @@ test('exist styleguide.html', function (t) {
     t.end()
 })
 
-var mdParse = require('../lib/md_parse')
-test('md_parse', function (t) {
-    var expected = '<p>/*</p>\n<h1 id="h1">h1</h1>\n<p>*/</p>\n<p>.class {\n  color: blue;\n}</p>'
-    var actual = mdParse(css);
-    t.same(actual, expected)
-    t.end()
-})
-
-var highlight = require('../lib/css_highlight')
-test('css_highlight', function (t) {
-    var expected = '<span class="hljs-comment">/*\n# h1\n*/</span>\n\n<span class="hljs-class">.class</span> <span class="hljs-rules">{\n  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> blue</span></span>;\n}</span>\n'
-    var actual = highlight(css)
-    t.same(actual, expected)
-    t.end()
-})

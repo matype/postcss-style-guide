@@ -1,7 +1,17 @@
 /*
+@document
+
 # h1
 */
 
+.class {
+  color: blue;
+}
+
+/*
+@doc
+## h2
+*/
 .class {
   color: blue;
 }

@@ -4,6 +4,7 @@ var postcss = require('postcss')
 var ejs = require('ejs')
 var nano = require('cssnano')
 var mkdirp = require('mkdirp')
+var annotation = require('css-annotation')
 
 var mdParse = require('./lib/md_parse')
 var highlight = require('./lib/css_highlight')
@@ -38,19 +39,27 @@ module.exports = postcss.plugin('postcss-style-guide', function (options) {
         options.processedCSS = options.processedCSS !== undefined ? options.processedCSS : root.toString().trim()
 
         root.walkComments(function (comment) {
-            if (comment.parent.type === 'root') {
-                var rule = comment.next()
-                var tmp = []
-                while (rule !== null && (rule.type === 'rule' || rule.type === 'atrule')) {
-                    tmp.push(rule.toString().trim())
-                    rule = rule.next() || null
+
+            var meta = annotation.read(comment.text)
+
+            if (meta.documents || meta.document || meta.docs || meta.doc || meta.styleguide) {
+                comment.text = comment.text.replace(/(@document|@doc|@docs|@styleguide)\s*\n/, '')
+
+                if (comment.parent.type === 'root') {
+                    var rule = comment.next()
+                    var tmp = []
+                    while (rule !== null && (rule.type === 'rule' || rule.type === 'atrule')) {
+                        tmp.push(rule.toString().trim())
+                        rule = rule.next() || null
+                    }
+
+                    var tmplRule = tmp.join('\n')
+                    maps.push({
+                        rule: highlight(tmplRule),
+                        html: mdParse(comment.text)
+                    })
                 }
 
-                var tmplRule = tmp.join('\n')
-                maps.push({
-                    rule: highlight(tmplRule),
-                    html: mdParse(comment.text)
-                })
             }
         })
 
