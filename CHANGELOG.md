@@ -1,3 +1,15 @@
+## 0.9.0
+
+Generate styleguide from comments have the special annotation
+
+Annotations:
+
+- `@styleguide`
+- `@documents`
+- `@document`
+- `@docs`
+- `@doc`
+
 ## 0.8.0
 
 - Introduce `options.dir`
