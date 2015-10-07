@@ -10,7 +10,7 @@ CSS comments will be parsed through Markdown and displayed in a generated HTML d
 $ npm install postcss-style-guide
 ```
 
-## Usage
+## Example
 
 Node.js:
 
@@ -52,10 +52,14 @@ gulp.task('default', function () {
 });
 ```
 
+postcss-style-guide generate style guide from CSS comments that have special annotation(`@styleguide`).
+
 Using this `input.css`:
 
 ```css
 /*
+@styleguide
+
 # I love Twitter Bootstrap
 
 Use the button classes on an `<a>`, `<button>`, `<input>` element.
@@ -65,7 +69,6 @@ Use the button classes on an `<a>`, `<button>`, `<input>` element.
     <button class="btn">Button</button>
 
 */
-
 .btn {
   display: inline-block;
   padding: 6px 12px;
@@ -83,6 +86,7 @@ Use the button classes on an `<a>`, `<button>`, `<input>` element.
   border: 1px solid transparent;
   border-radius: 4px;
 }
+
 .btn:hover,
 .btn:focus,
 .btn.focus {
@@ -97,6 +101,8 @@ You will get `styleguide.html` for the style guide.
 ![Default style guide design](./style-guide-default.png)
 
 Default template design is inspired by [http://codeguide.co/](http://codeguide.co/).
+
+
 
 ## Options
 
