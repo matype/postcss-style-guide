@@ -5,6 +5,7 @@ var ejs = require('ejs')
 var nano = require('cssnano')
 var mkdirp = require('mkdirp')
 var annotation = require('css-annotation')
+var themeDir = require('psg-theme-default')
 
 var mdParse = require('./lib/md_parse')
 var highlight = require('./lib/css_highlight')
@@ -25,10 +26,10 @@ module.exports = postcss.plugin('postcss-style-guide', function (options) {
     var themeName = 'psg-theme-' + options.theme
     var themePath
     if (options.theme === 'default') {
-        themePath = __dirname + '/node_modules/' + themeName
+        themePath = themeDir
     }
     else {
-        themePath = 'node_modules/' + themeName
+        themePath = path.join('node_modules', themeName)
     }
 
     options.template = fs.readFileSync(themePath + '/template.ejs', 'utf-8').trim()
