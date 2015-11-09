@@ -1,3 +1,7 @@
+## 0.9.2
+
+Fix [#22](https://github.com/morishitter/postcss-style-guide/issues/22), thanks @watilde .
+
 ## 0.9.1
 
 Bump `psg-theme-default` to v0.5.0.
