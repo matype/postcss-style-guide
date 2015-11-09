@@ -1,3 +1,7 @@
+## 0.9.1
+
+Bump `psg-theme-default` to v0.5.0.
+
 ## 0.9.0
 
 Generate styleguide from comments have the special annotation
