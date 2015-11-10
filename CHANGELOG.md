@@ -1,3 +1,7 @@
+## 0.9.3
+
+Fix codeStyle path.
+
 ## 0.9.2
 
 Fix [#22](https://github.com/morishitter/postcss-style-guide/issues/22), thanks @watilde .
