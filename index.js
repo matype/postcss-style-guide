@@ -75,7 +75,8 @@ module.exports = postcss.plugin('postcss-style-guide', function (options) {
 })
 
 function generate (maps, options) {
-    var codeStyle = fs.readFileSync(__dirname + '/node_modules/highlight.js/styles/github.css', 'utf-8').trim()
+    var codeStylePath = path.join('node_modules', 'highlight.js')
+    var codeStyle = fs.readFileSync(codeStylePath + '/styles/github.css', 'utf-8').trim()
 
     Promise.all([
         nano.process(options.processedCSS),
