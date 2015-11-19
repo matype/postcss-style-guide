@@ -110,4 +110,7 @@ function generate (maps, options) {
             console.log('Successfully created style guide!')
         })
     })
+    .catch(function(err) {
+        console.log(err);
+    });
 }
