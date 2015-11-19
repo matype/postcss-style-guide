@@ -1,6 +1,7 @@
 ## 0.9.3
 
-Fix codeStyle path.
+- Fix codeStyle path
+- Fix [#26](https://github.com/morishitter/postcss-style-guide/pull/26)
 
 ## 0.9.2
 
