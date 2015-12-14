@@ -52,6 +52,44 @@ gulp.task('default', function () {
 });
 ```
 
+in [Grunt](http://gruntjs.com/):  
+Use together with [nDmitry/grunt-postcss](https://github.com/nDmitry/grunt-postcss)
+
+```js
+module.exports = function(grunt) {
+
+  grunt.initConfig({
+    postcss: {
+      src: 'input.css',
+      options: {
+        map: true, // inline sourcemaps
+
+        // or
+        map: {
+          inline: false, // save all sourcemaps as separate files...
+          annotation: 'dist/css/maps/' // ...to the specified directory
+        },
+
+        processors: [
+          require('postcss-style-guide')({
+            // options :)
+            name: 'Project name'
+          }),
+        ]
+      },
+      dist: {
+        src: 'output.css',
+      }
+    }
+  });
+
+  grunt.loadNpmTasks('grunt-postcss');
+  grunt.registerTask('default', ['postcss']);
+
+};
+```
+
+
 postcss-style-guide generate style guide from CSS comments that have special annotation(`@styleguide`).
 
 Using this `input.css`:
