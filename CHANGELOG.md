@@ -1,3 +1,10 @@
+## 0.9.4
+
+- Fix codeStyle path [#27](https://github.com/morishitter/postcss-style-guide/pull/27)
+- Add Gruntfile sample [#28](https://github.com/morishitter/postcss-style-guide/pull/28)
+
+Thanks [@mitsuruog](https://github.com/mitsuruog).
+
 ## 0.9.3
 
 - Fix codeStyle path
