@@ -1,3 +1,7 @@
+## 0.9.5
+
+Resolve path to `highlight.js` and `github.css`. [#31](https://github.com/morishitter/postcss-style-guide/pull/31)
+
 ## 0.9.4
 
 - Fix codeStyle path [#27](https://github.com/morishitter/postcss-style-guide/pull/27)
