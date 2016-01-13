@@ -65,7 +65,7 @@ module.exports = postcss.plugin('postcss-style-guide', function (options) {
         })
 
         if (arguments[0] !== 'object') {
-            processedCSS = root.toString().trim()
+            options.processedCSS = root.toString().trim()
         }
 
         generate(maps, options)
