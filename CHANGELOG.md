@@ -1,3 +1,7 @@
+## 0.9.6
+
+Fixed a bug. [#32](https://github.com/morishitter/postcss-style-guide/pull/32)
+
 ## 0.9.5
 
 Resolve path to `highlight.js` and `github.css`. [#31](https://github.com/morishitter/postcss-style-guide/pull/31)
