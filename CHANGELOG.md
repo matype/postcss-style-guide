@@ -1,3 +1,7 @@
+## 0.9.7
+
+Fixed a bug.
+
 ## 0.9.6
 
 Fixed a bug. [#32](https://github.com/morishitter/postcss-style-guide/pull/32)
