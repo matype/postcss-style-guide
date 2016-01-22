@@ -1,112 +1,134 @@
-var fs = require('fs')
-var path = require('path')
-var postcss = require('postcss')
-var ejs = require('ejs')
-var nano = require('cssnano')
-var mkdirp = require('mkdirp')
-var annotation = require('css-annotation')
-var themeDir = require('psg-theme-default')
+var fs = require('fs');
+var path = require('path');
+var postcss = require('postcss');
+var ejs = require('ejs');
+var nano = require('cssnano');
+var mkdirp = require('mkdirp');
+var annotation = require('css-annotation');
 
-var mdParse = require('./lib/md_parse')
-var highlight = require('./lib/css_highlight')
+var mdParse = require('./lib/md_parse');
+var highlight = require('./lib/css_highlight');
 
-module.exports = postcss.plugin('postcss-style-guide', function (options) {
+module.exports = postcss.plugin('postcss-style-guide', function (opts) {
+    var func = function (root) {
+        if (typeof(opts) === 'object' && !opts.processedCSS) {
+            opts.processedCSS = root.toString();
+        }
+        var params = newParams(opts);
+        var maps = walkComments(root);
+        var promise = generate(maps, params)
+          .then(function (styles) {
+            var html = render(maps, styles, params);
+            writeFile(html, params);
+          })
+          .then(function () {
+            console.log('Successfully created style guide!');
+          }).catch(function (err) {
+            console.error('generate err:', err);
+          });
+        return promise;
+    };
+    return func;
+});
 
-    if (typeof(arguments[0]) === 'object') {
-        options = arguments[0]
+function newParams (opts) {
+    var params = {};
+    params.projectName = opts.name || 'Style Guide';
+    params.file = opts.file || 'styleguide';
+    params.dir = opts.dir || 'docs';
+    params.showCode = opts.showCode || true;
+    params.processedCSS = opts.processedCSS;
+    var theme;
+    if (opts.theme) {
+        theme = 'psg-theme-' + opts.theme;
+    } else {
+        theme = 'psg-theme-default';
     }
-
-    options = options || {}
-    options.theme = options.theme !== undefined ? options.theme : 'default'
-    options.name = options.name !== undefined ? options.name : 'Style Guide'
-    options.file = options.file !== undefined ? options.file : 'styleguide'
-    options.dir = options.dir !== undefined ? options.dir : 'docs'
-    options.showCode = options.showCode !== undefined ? options.showCode : true
-
-    var themeName = 'psg-theme-' + options.theme
-    var themePath
-    if (options.theme === 'default') {
-        themePath = themeDir
+    var themePath = opts.themePath || path.resolve('node_modules', theme);
+    try {
+        var templateFile = path.resolve(themePath, 'template.ejs');
+        params.template = fs.readFileSync(templateFile, 'utf-8');
+    } catch (err) {
+        throw err;
     }
-    else {
-        themePath = path.join('node_modules', themeName)
+    try {
+        var templateStyle = path.resolve(themePath, 'style.css');
+        params.style = fs.readFileSync(templateStyle, 'utf-8');
+    } catch (e) {
+        throw err;
     }
+    return params;
+}
 
-    options.template = fs.readFileSync(themePath + '/template.ejs', 'utf-8').trim()
-    options.style = fs.readFileSync(themePath + '/style.css', 'utf-8').trim()
-
-    var maps = []
-    return function (root) {
-        options.processedCSS = options.processedCSS !== undefined ? options.processedCSS : root.toString().trim()
-
-        root.walkComments(function (comment) {
-
-            var meta = annotation.read(comment.text)
-
-            if (meta.documents || meta.document || meta.docs || meta.doc || meta.styleguide) {
-                comment.text = comment.text.replace(/(@document|@doc|@docs|@styleguide)\s*\n/, '')
-
-                if (comment.parent.type === 'root') {
-                    var rule = comment.next()
-                    var tmp = []
-                    while (rule !== null && (rule.type === 'rule' || rule.type === 'atrule')) {
-                        tmp.push(rule.toString().trim())
-                        rule = rule.next() || null
-                    }
-
-                    var tmplRule = tmp.join('\n')
-                    maps.push({
-                        rule: highlight(tmplRule),
-                        html: mdParse(comment.text)
-                    })
-                }
-
+function walkComments (root) {
+    var list = [];
+    root.walkComments(function (comment) {
+        var meta = annotation.read(comment.text);
+        if (!meta.documents && !meta.document && !meta.docs && !meta.doc && !meta.styleguide) {
+            return;
+        }
+        if (comment.parent.type !== 'root') {
+            return;
+        }
+        var rules = [];
+        var rule = comment.next();
+        while ((rule || {}).next) {
+            if (rule.type === 'rule' || rule.type === 'atrule') {
+                rules.push(rule.toString());
             }
-        })
+            rule = rule.next();
+        }
+        var joined = rules.join('\n');
+        var md = comment.text.replace(/(@document|@doc|@docs|@styleguide)\s*\n/, '');
+        list.push({
+            rule: highlight(joined),
+            html: mdParse(md)
+        });
+    }.bind(this));
+    return list;
+}
 
-        generate(maps, options)
-
-        return root
-    }
-})
-
-function generate (maps, options) {
-    var codeStylePath = path.join(path.dirname(require.resolve('highlight.js')), '..')
-    var codeStyle = fs.readFileSync(codeStylePath + '/styles/github.css', 'utf-8').trim()
-
-    Promise.all([
-        nano.process(options.processedCSS),
-        nano.process(options.style),
+function generate (maps, params) {
+    var processedCSS = params.processedCSS;
+    var style = params.style;
+    var p = require.resolve('highlight.js/styles/github.css');
+    var codeStyle = fs.readFileSync(p, 'utf-8');
+    return Promise.all([
+        nano.process(processedCSS),
+        nano.process(style),
         nano.process(codeStyle)
-    ]).then(function (result) {
+    ]);
+}
 
-        var params = {
-            projectName: options.name,
-            processedCSS: result.shift().css,
-            tmplStyle: result.shift().css,
-            codeStyle: result.shift().css,
-            showCode: options.showCode,
-            maps: maps
-        }
-
-        var html = ejs.render(options.template, params)
-        mkdirp(options.dir, function (err) {
-            if (err) {
-                throw err
-            }
-        })
-        var fileName = options.file
-        if (!path.extname(options.file)) {
-            fileName = fileName + '.html'
-        }
-        fs.writeFile(options.dir + '/' + fileName, html, function (err) {
-            if (err) {
-                throw err
-            }
-            console.log('Successfully created style guide!')
-        })
-    })
-    .catch(function(err) {
-        console.log(err);
+function render (maps, styles, params) {
+    var name     = params.projectName;
+    var showCode = params.showCode;
+    var template = params.template;
+    return ejs.render(template, {
+        projectName:  name,
+        processedCSS: styles[0].css,
+        tmplStyle:    styles[1].css,
+        codeStyle:    styles[2].css,
+        showCode:     showCode,
+        maps:         maps
     });
 }
+
+function writeFile (html, params) {
+    var dest = path.resolve(params.dir, params.file);
+    if (!path.extname(dest)) {
+        dest += '.html';
+    }
+    try {
+        var dir = path.dirname(dest);
+        mkdirp.sync(dir);
+    } catch (err) {
+        throw err;
+    }
+    try {
+        fs.writeFileSync(dest, html, 'utf8');
+    } catch (err) {
+        throw err;
+    }
+}
+
