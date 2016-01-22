@@ -6,12 +6,10 @@ var postcss = require('postcss');
 var styleGuide = require('../');
 
 test('exist index.html', function (t) {
-    var css = fs.readFileSync('test/fixture.css', 'utf-8');
     var opts = {
         name: 'Default theme',
-        processedCSS: css,
-        dir: 'styleguide',
-        file: 'index.html',
+        src: 'test/fixture.css',
+        dest: 'styleguide/index.html',
     };
     var cwd = process.cwd();
     var src = path.resolve(cwd, 'test/fixture.css');
