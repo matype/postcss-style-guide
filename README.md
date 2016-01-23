@@ -19,18 +19,18 @@ var fs = require('fs');
 var postcss = require('postcss');
 var styleGuide = require('postcss-style-guide');
 
-var input = fs.readFileSync('input.css', 'utf-8');
-var processed = fs.readFileSync('output.css', 'utf-8');
-
-var options = {
-    name: "Project name",
-    processedCSS: processedCSS
+var opts = {
+    name: 'Default theme',
+    src: 'input.css',
+    dest: 'index.html'
 };
-
-var output = postcss()
-    .use(styleGuide(processed))
-    .process(input)
-    .css;
+postcss([styleGuide(opts)])
+  .process(css)
+  .then(function () {
+    var dest = path.resolve(process.cwd(), 'index.html');
+    var result = fs.readFileSync(dest, 'utf8');
+    console.log(reuslt); // show result
+  });
 ```
 
 in [Gulp](https://github.com/gulpjs/gulp):
@@ -140,15 +140,14 @@ You will get `styleguide.html` for the style guide.
 
 Default template design is inspired by [http://codeguide.co/](http://codeguide.co/).
 
-
-
 ## Options
 
-- `options.theme`: Theme name
-- `options.name`: Project name
-- `options.file`: Style guide file name (default: `styleguide.html`)
-- `options.dir`: Output directory (default: "docs")
+- `options.src`: The path to the source CSS file. You should always set src.
+- `options.dest`: The path to style guide file. (default: `docs/index.html`)
+- `options.project`: Project name. (default: `Style Guide`)
 - `options.showCode`: The flag to show CSS code (default: `true`)
+- `options.theme`: Theme name. (default: `psg-theme-default`)
+- `options.themePath`: The path to theme file. (default: `node_modules/psg-theme-default`)
 
 ## Themes
 
