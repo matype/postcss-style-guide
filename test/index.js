@@ -13,7 +13,7 @@ var analyzer = require('../lib/analyzer');
 
 test('params: default options', function (t) {
     var src = 'test/input.css';
-    var actual = newParams({
+    var actual = newParams({}, {
         src: src
     });
     var cwd = process.cwd();
@@ -38,7 +38,7 @@ test('params: custom options', function (t) {
     var dest = path.resolve(cwd, 'test/dest/index.html');
     var project = 'custom style guide';
     var themePath = path.resolve('node_modules', 'psg-theme-default');
-    var actual = newParams({
+    var actual = newParams({}, {
         src: src,
         dest: dest,
         project: project,
@@ -56,17 +56,6 @@ test('params: custom options', function (t) {
         style: fs.readFileSync(templateStyle, 'utf-8')
     };
     t.deepEqual(actual, expected);
-    t.end();
-});
-
-test('params: broken options', function (t) {
-    try {
-        newParams({});
-    } catch (err) {
-        if (err.message !== 'src file is not found') {
-            t.notOk(err.message, 'uncaught exception')
-        }
-    }
     t.end();
 });
 
