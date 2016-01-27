@@ -22,7 +22,7 @@ test('params: default options', function (t) {
     var templateStyle = path.resolve(themePath, 'style.css');
     var expected = {
         src: fs.readFileSync(src, 'utf8'),
-        dest: path.resolve(cwd, 'docs/index.html'),
+        dest: path.resolve(cwd, 'styleguide/index.html'),
         project: 'Style Guide',
         showCode: true,
         template: fs.readFileSync(templateFile, 'utf-8'),
