@@ -28,8 +28,10 @@ module.exports = postcss.plugin('postcss-style-guide', function (opts) {
             fileWriter.write(params.dest, html);
           }).then(function () {
             console.log('Successfully created style guide!');
+            return root;
           }).catch(function (err) {
             console.error('generate err:', err);
+            return root;
           });
         return promise;
     };
