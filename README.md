@@ -16,80 +16,61 @@ Node.js:
 
 ```js
 var fs = require('fs');
+var path = require('path');
 var postcss = require('postcss');
-var styleGuide = require('postcss-style-guide');
-
-var opts = {
-    name: 'Default theme',
-    src: 'input.css',
-    dest: 'index.html'
-};
-postcss([styleGuide(opts)])
-  .process(css)
-  .then(function () {
-    var dest = path.resolve(process.cwd(), 'index.html');
-    var result = fs.readFileSync(dest, 'utf8');
-    console.log(reuslt); // show result
-  });
+var styleguide = require('postcss-style-guide');
+postcss([
+	styleguide(opts)
+]).process('').then(function (root) {
+	var dest = path.resolve(process.cwd(), 'dest/output.html');
+	var output = fs.readFileSync(dest, 'utf8');
+	console.log(output); // show output.html
+	console.log(reuslt); // show root css
+});
 ```
 
 in [Gulp](https://github.com/gulpjs/gulp):
 
 ```js
 var gulp = require('gulp');
-
+var fs = require('fs');
+var postcss = require('gulp-postcss');
+var scss = require('postcss-scss');
+var styleguide = require('postcss-style-guide');
 gulp.task('default', function () {
-    var postcss = require('gulp-postcss');
-    var processedCSS = fs.readFileSync('output.css', 'utf-8');
-    return gulp.src('src/*.css')
-        .pipe(postcss([
-            require('postcss-style-guide')({
-                name: "Project name",
-                processedCSS: processedCSS
-            })
-        ]))
-        .pipe(gulp.dest('build/'));
+	var processors = [
+		styleguide
+	];
+	return gulp.src('src/*.css')
+	  .pipe(postcss(processors, {syntax: scss}));
 });
 ```
 
-in [Grunt](http://gruntjs.com/):  
+in [Grunt](http://gruntjs.com/):
+
 Use together with [nDmitry/grunt-postcss](https://github.com/nDmitry/grunt-postcss)
 
 ```js
+var scss = require('postcss-scss');
+var styleguide = require('postcss-style-guide');
 module.exports = function(grunt) {
-
   grunt.initConfig({
     postcss: {
-      src: 'input.css',
+      src: 'src/*.css',
       options: {
-        map: true, // inline sourcemaps
-
-        // or
-        map: {
-          inline: false, // save all sourcemaps as separate files...
-          annotation: 'dist/css/maps/' // ...to the specified directory
-        },
-
+        syntax: scss,
+        writeDest: false,
         processors: [
-          require('postcss-style-guide')({
-            // options :)
-            name: 'Project name'
-          }),
+          styleguide
         ]
-      },
-      dist: {
-        src: 'output.css',
       }
     }
   });
 
   grunt.loadNpmTasks('grunt-postcss');
   grunt.registerTask('default', ['postcss']);
-
 };
 ```
-
-
 postcss-style-guide generate style guide from CSS comments that have special annotation(`@styleguide`).
 
 Using this `input.css`:
@@ -131,7 +112,6 @@ Use the button classes on an `<a>`, `<button>`, `<input>` element.
   color: #333;
   text-decoration: none;
 }
-
 ```
 
 You will get `styleguide.html` for the style guide.
@@ -142,8 +122,8 @@ Default template design is inspired by [http://codeguide.co/](http://codeguide.c
 
 ## Options
 
-- `options.src`: The path to the source CSS file. You should always set src.
-- `options.dest`: The path to style guide file. (default: `docs/index.html`)
+- `options.src`: The path to the source CSS file.
+- `options.dest`: The path to style guide file. (default: `styleguide/index.html`)
 - `options.project`: Project name. (default: `Style Guide`)
 - `options.showCode`: The flag to show CSS code (default: `true`)
 - `options.theme`: Theme name. (default: `psg-theme-default`)
