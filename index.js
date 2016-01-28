@@ -8,6 +8,7 @@ var markdownParser = require('./lib/markdown');
 var syntaxHighlighter = require('./lib/syntaxHighlight');
 
 module.exports = postcss.plugin('postcss-style-guide', function (opts) {
+    opts = opts || {};
     analyzer.setModules(syntaxHighlighter, markdownParser);
     var func = function (root) {
         try {
