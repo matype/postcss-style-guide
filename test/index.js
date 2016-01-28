@@ -167,6 +167,30 @@ test('integration test: confirm output', function (t) {
       });
 });
 
+test('async plugin test', function (t) {
+    var starts = 0;
+    var finish = 0;
+    var asyncFunc = function (css) {
+        return new Promise(function (resolve) {
+            starts += 1;
+            setTimeout(function () {
+                finish += 1;
+                css.append('a {}');
+                resolve();
+            }, 100);
+        });
+    };
+    postcss([asyncFunc, styleGuide, asyncFunc]).process('').then(function (result) {
+        t.same(starts, 2);
+        t.same(finish, 2);
+        t.same(result.css, 'a {}\na {}');
+        t.end()
+    }).catch(function (err) {
+        t.error(err)
+        t.end();
+    });
+});
+
 test.onFinish(function () {
     var cwd = process.cwd();
     var dest = path.resolve(cwd, 'test/dest');
