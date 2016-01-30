@@ -10,9 +10,10 @@ var syntaxHighlighter = require('./lib/syntaxHighlight');
 module.exports = postcss.plugin('postcss-style-guide', function (opts) {
     opts = opts || {};
     analyzer.setModules(syntaxHighlighter, markdownParser);
-    var func = function (root) {
+    var func = function (root, result) {
+        var resultOpts = result.opts || {};
         try {
-            var params = newParams(root, opts);
+            var params = newParams(root, opts, resultOpts);
         } catch (err) {
             throw err;
         }
