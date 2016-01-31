@@ -16,16 +16,16 @@ Node.js:
 
 ```js
 var fs = require('fs');
-var path = require('path');
 var postcss = require('postcss');
 var styleguide = require('postcss-style-guide');
-postcss([
-	styleguide(opts)
-]).process('').then(function (root) {
-	var dest = path.resolve(process.cwd(), 'dest/output.html');
-	var output = fs.readFileSync(dest, 'utf8');
-	console.log(output); // show output.html
-	console.log(reuslt); // show root css
+var input = fs.readFileSync('input.css', 'utf8');
+
+var output = postcss([
+  styleguide
+]).process(input)
+.then(function (reuslt) {
+  var output = fs.readFileSync('styleGuide/index.html', 'utf8');
+  console.log('output:', output);
 });
 ```
 
@@ -33,16 +33,16 @@ in [Gulp](https://github.com/gulpjs/gulp):
 
 ```js
 var gulp = require('gulp');
-var fs = require('fs');
 var postcss = require('gulp-postcss');
 var scss = require('postcss-scss');
 var styleguide = require('postcss-style-guide');
+
 gulp.task('default', function () {
-	var processors = [
-		styleguide
-	];
-	return gulp.src('src/*.css')
-	  .pipe(postcss(processors, {syntax: scss}));
+  var processors = [
+    styleguide
+  ];
+  return gulp.src('src/*.css')
+          .pipe(postcss(processors, {syntax: scss}))
 });
 ```
 
@@ -53,6 +53,7 @@ Use together with [nDmitry/grunt-postcss](https://github.com/nDmitry/grunt-postc
 ```js
 var scss = require('postcss-scss');
 var styleguide = require('postcss-style-guide');
+
 module.exports = function(grunt) {
   grunt.initConfig({
     postcss: {
