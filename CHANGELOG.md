@@ -1,3 +1,9 @@
+## 0.10.0
+
+- Implemented as a asynchronous plugin (It returns `Promise` object).
+- Changed some option's name
+
+
 ## 0.9.7
 
 Fixed a bug.
