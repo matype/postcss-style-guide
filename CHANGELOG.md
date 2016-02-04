@@ -1,3 +1,7 @@
+## 0.10.1
+
+Fixed a bug.
+
 ## 0.10.0
 
 - Implemented as a asynchronous plugin (It returns `Promise` object).
