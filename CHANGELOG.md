@@ -1,3 +1,7 @@
+## 0.11.0
+
+Introduce `@title` annotation to set the title of documents
+
 ## 0.10.1
 
 Fixed a bug.
