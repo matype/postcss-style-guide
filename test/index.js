@@ -43,7 +43,7 @@ test('params: custom options', function (t) {
         dest: dest,
         project: project,
         showCode: false,
-        themePath: themePath,
+        themePath: themePath
     });
     var templateFile = path.resolve(themePath, 'template.ejs');
     var templateStyle = path.resolve(themePath, 'style.css');
@@ -53,7 +53,7 @@ test('params: custom options', function (t) {
         project: project,
         showCode: false,
         template: fs.readFileSync(templateFile, 'utf-8'),
-        style: fs.readFileSync(templateStyle, 'utf-8')
+        style: fs.readFileSync(templateStyle, 'utf-8'),
     };
     t.deepEqual(actual, expected);
     t.end();
@@ -108,11 +108,19 @@ test('analyzer: analyze root node', function (t) {
     var actual = analyzer.analyze(root);
     var expected = [{
         rule: '<span class="hljs-class">.class</span> <span class="hljs-rules">{\n  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> blue</span></span>;\n}</span>\n<span class="hljs-class">.class</span> <span class="hljs-rules">{\n  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> blue</span></span>;\n}</span>',
-        html: '<h1 id="h1">h1</h1>'
+        html: '<h1 id="h1">h1</h1>',
+        link: {
+            id: 'psg-link-0',
+            title: 'input sample'
+        }
     },
     {
         rule: '<span class="hljs-class">.class</span> <span class="hljs-rules">{\n  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> blue</span></span>;\n}</span>',
-        html: '<h2 id="h2">h2</h2>'
+        html: '<h2 id="h2">h2</h2>',
+        link: {
+            id: 'psg-link-1',
+            title: null
+        }
     }];
     t.same(actual, expected);
     t.end();
