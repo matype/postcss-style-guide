@@ -6,6 +6,7 @@ var template = require('./lib/template');
 var fileWriter = require('./lib/fileWriter');
 var markdownParser = require('./lib/markdown');
 var syntaxHighlighter = require('./lib/syntaxHighlight');
+var colorPalette = require('./lib/colorPalette');
 
 module.exports = postcss.plugin('postcss-style-guide', function (opts) {
     opts = opts || {};
@@ -17,6 +18,7 @@ module.exports = postcss.plugin('postcss-style-guide', function (opts) {
         } catch (err) {
             throw err;
         }
+        colorPalette.parse(root.toString());
         var maps = analyzer.analyze(root);
         var promise = syntaxHighlighter.execute({
             src: params.src,
