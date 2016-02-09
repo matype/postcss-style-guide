@@ -1,3 +1,7 @@
+## 0.12.0
+
+Can pass the color palette object that generate from CSS Custom Properties to the template file
+
 ## 0.11.1
 
 Fixed a bug [#36](https://github.com/morishitter/postcss-style-guide/issues/36).
