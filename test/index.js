@@ -10,6 +10,7 @@ var fileWriter = require('../lib/fileWriter');
 var markdownParser = require('../lib/markdown');
 var syntaxHighlighter = require('../lib/syntaxHighlight');
 var analyzer = require('../lib/analyzer');
+var colorPalette = require('../lib/colorPalette');
 
 test('params: default options', function (t) {
     var src = 'test/input.css';
@@ -122,6 +123,21 @@ test('analyzer: analyze root node', function (t) {
             title: null
         }
     }];
+    t.same(actual, expected);
+    t.end();
+});
+
+test('colorPalette: generate color palette from custom properties', function (t) {
+    var cwd = process.cwd();
+    var filePath = path.resolve(cwd, 'test/color.css');
+    var css = fs.readFileSync(filePath, 'utf8');
+    colorPalette.parse(css)
+    var actual = colorPalette.parse(css);
+    var expected = [
+        { name: 'red', color: '#ff0000' },
+        { name: 'green', color: '#00ff00' },
+        { name: 'blue', color: '#0000ff' }
+    ];
     t.same(actual, expected);
     t.end();
 });

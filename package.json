@@ -18,9 +18,11 @@
   "license": "MIT",
   "dependencies": {
     "css-annotation": "^0.6.0",
+    "css-annotation-block": "^0.1.0",
     "cssnano": "^3.0.1",
     "ejs": "^2.3.1",
     "highlight.js": "^8.5.0",
+    "is-color": "^0.2.0",
     "marked": "^0.3.3",
     "mkdirp": "^0.5.1",
     "postcss": "^5.0.2",
