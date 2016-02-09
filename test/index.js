@@ -107,7 +107,7 @@ test('analyzer: analyze root node', function (t) {
     var root = postcss.parse(css);
     var actual = analyzer.analyze(root);
     var expected = [{
-        rule: '<span class="hljs-class">.class</span> <span class="hljs-rules">{\n  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> blue</span></span>;\n}</span>\n<span class="hljs-class">.class</span> <span class="hljs-rules">{\n  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> blue</span></span>;\n}</span>',
+        rule: '<span class="hljs-class">.class</span> <span class="hljs-rules">{\n  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> blue</span></span>;\n}</span>',
         html: '<h1 id="h1">h1</h1>',
         link: {
             id: 'psg-link-0',
@@ -115,7 +115,7 @@ test('analyzer: analyze root node', function (t) {
         }
     },
     {
-        rule: '<span class="hljs-class">.class</span> <span class="hljs-rules">{\n  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> blue</span></span>;\n}</span>',
+        rule: '<span class="hljs-class">.class</span> <span class="hljs-rules">{\n  <span class="hljs-rule"><span class="hljs-attribute">color</span>:<span class="hljs-value"> red</span></span>;\n}</span>',
         html: '<h2 id="h2">h2</h2>',
         link: {
             id: 'psg-link-1',
