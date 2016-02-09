@@ -18,8 +18,8 @@ module.exports = postcss.plugin('postcss-style-guide', function (opts) {
         } catch (err) {
             throw err;
         }
-        colorPalette.parse(root.toString());
         var maps = analyzer.analyze(root);
+        var palette = colorPalette.parse(root.toString());
         var promise = syntaxHighlighter.execute({
             src: params.src,
             tmplStyle: params.style,
@@ -28,7 +28,8 @@ module.exports = postcss.plugin('postcss-style-guide', function (opts) {
             var html = template.rendering(maps, styles, {
                 project: params.project,
                 showCode: params.showCode,
-                tmpl: params.template
+                tmpl: params.template,
+                colorPalette: palette
             });
             fileWriter.write(params.dest, html);
           }).then(function () {
