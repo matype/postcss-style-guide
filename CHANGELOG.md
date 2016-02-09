@@ -1,3 +1,7 @@
+## 0.11.1
+
+Fixed a bug [#36](https://github.com/morishitter/postcss-style-guide/issues/36).
+
 ## 0.11.0
 
 Introduce `@title` annotation to set the title of documents
