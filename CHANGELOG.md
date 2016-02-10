@@ -1,3 +1,7 @@
+## 0.13.0
+
+Update default theme.
+
 ## 0.12.1
 
 Fixe a bug.
