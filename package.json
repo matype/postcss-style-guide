@@ -1,6 +1,6 @@
 {
   "name": "postcss-style-guide",
-  "version": "0.12.0",
+  "version": "0.12.1",
   "description": "PostCSS plugin to generate a style guide automatically",
   "main": "index.js",
   "scripts": {
