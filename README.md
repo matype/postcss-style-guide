@@ -32,94 +32,109 @@ var output = postcss([
 in [Gulp](https://github.com/gulpjs/gulp):
 
 ```js
-var gulp = require('gulp');
-var postcss = require('gulp-postcss');
-var scss = require('postcss-scss');
-var styleguide = require('postcss-style-guide');
+var gulp = require('gulp')
 
-gulp.task('default', function () {
-  var processors = [
-    styleguide
-  ];
-  return gulp.src('src/*.css')
-          .pipe(postcss(processors, {syntax: scss}))
-});
+gulp.task('build:css', function () {
+    var concat = require('gulp-concat')
+    var postcss = require('gulp-postcss')
+    var autoprefixer = require('autoprefixer')
+    var customProperties = require('postcss-custom-properties')
+    var Import = require('postcss-import')
+    var styleGuide = require('postcss-style-guide')
+    var nano = require('cssnano')
+
+    return gulp.src('./app.css')
+        .pipe(postcss([
+            Import,
+            customProperties({ preserve: true }),
+            autoprefixer,
+            styleGuide({
+                project: 'Project name',
+                dest: 'styleguide/index.html',
+                showCode: false,
+                themePath: '../'
+            }),
+            nano
+        ]))
+        .pipe(concat('app.min.css'))
+        .pipe(gulp.dest('dist/css'))
+})
 ```
 
-in [Grunt](http://gruntjs.com/):
+We can generate color palette from CSS Custom Properties with `@start color` and `@end color` annotations.
 
-Use together with [nDmitry/grunt-postcss](https://github.com/nDmitry/grunt-postcss)
+`app.css`:
 
-```js
-var scss = require('postcss-scss');
-var styleguide = require('postcss-style-guide');
-
-module.exports = function(grunt) {
-  grunt.initConfig({
-    postcss: {
-      src: 'src/*.css',
-      options: {
-        syntax: scss,
-        writeDest: false,
-        processors: [
-          styleguide
-        ]
-      }
-    }
-  });
-
-  grunt.loadNpmTasks('grunt-postcss');
-  grunt.registerTask('default', ['postcss']);
-};
+```css
+@import "color";
+@import "button";
 ```
+
+`color.css`:
+
+```css
+import "button";
+/* @start color */
+:root {
+    --red: #e23B00;
+    --blue: #3f526b;
+    --black: #000;
+    --background: #faf8f5;
+}
+/* @end color */
+```
+
 postcss-style-guide generate style guide from CSS comments that have special annotation(`@styleguide`).
 
-Using this `input.css`:
+`@title`: set component name
+
+`button.css`:
 
 ```css
 /*
 @styleguide
 
-# I love Twitter Bootstrap
+@title Button
 
-Use the button classes on an `<a>`, `<button>`, `<input>` element.
+Use the button classes on and `<a>`, `<button>`, `<input>` elements.
 
-<button class="btn">Button</button>
+<button class="button button--large button--red">Red Button</button>
 
-    <button class="btn">Button</button>
+    <button class="button button--large button--red">Red Button</button>
 
+<button class="button button--large button--blue">Red Button</button>
+
+    <button class="button button--large button--blue">Red Button</button>
 */
-.btn {
-  display: inline-block;
-  padding: 6px 12px;
-  margin-bottom: 0;
-  font-size: 14px;
-  font-weight: normal;
-  line-height: 1.42857143;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  touch-action: manipulation;
-  cursor: pointer;
-  user-select: none;
-  background-image: none;
-  border: 1px solid transparent;
-  border-radius: 4px;
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    cursor: pointer;
 }
 
-.btn:hover,
-.btn:focus,
-.btn.focus {
-  color: #333;
-  text-decoration: none;
+.button--large {
+    width: 140px;
+    height: 40px;
+    font-size: 14px;
+}
+
+.button--red {
+    color: #fff;
+    background-color: var(--red);
+}
+
+.button--blue {
+    color: #fff;
+    background-color: var(--blue);
 }
 ```
 
-You will get `styleguide.html` for the style guide.
+You will get `styleguide/index.html` for the style guide.
 
 ![Default style guide design](./style-guide-default.png)
 
-Default template design is inspired by [http://codeguide.co/](http://codeguide.co/).
 
 ## Options
 

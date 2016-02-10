@@ -26,7 +26,7 @@
     "marked": "^0.3.3",
     "mkdirp": "^0.5.1",
     "postcss": "^5.0.2",
-    "psg-theme-default": "^0.5.0"
+    "psg-theme-default": "^1.0.0"
   },
   "devDependencies": {
     "tape": "^4.0.0"
