@@ -1,3 +1,7 @@
+## 0.12.1
+
+Fixe a bug.
+
 ## 0.12.0
 
 Can pass the color palette object that generate from CSS Custom Properties to the template file
