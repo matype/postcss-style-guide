@@ -214,7 +214,6 @@ test('async plugin test', function (t) {
     });
 });
 
-/*
 test.onFinish(function () {
     var cwd = process.cwd();
     var dest = path.resolve(cwd, 'test/dest');
@@ -233,4 +232,3 @@ test.onFinish(function () {
     };
     recursiveDeleteDir(dest);
 });
-*/
