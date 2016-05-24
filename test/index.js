@@ -232,17 +232,28 @@ test.onFinish(function () {
     var cwd = process.cwd();
     var dest = path.resolve(cwd, 'test/dest');
     var recursiveDeleteDir = function (dest) {
-        if (fs.existsSync(dest)) {
-            fs.readdirSync(dest).forEach(function (file) {
-                var filePath = path.resolve(dest, file);
-                if (fs.lstatSync(filePath).isDirectory()) {
-                    recursiveDeleteDir(filePath);
-                } else {
-                    fs.unlinkSync(filePath);
-                }
-            });
-            fs.rmdirSync(dest);
+        if (!isExists(dest)) {
+            return
         }
+        fs.readdirSync(dest).forEach(function (file) {
+            var filePath = path.resolve(dest, file);
+            if (fs.lstatSync(filePath).isDirectory()) {
+                recursiveDeleteDir(filePath);
+            } else {
+                fs.unlinkSync(filePath);
+            }
+        });
+        fs.rmdirSync(dest);
     };
     recursiveDeleteDir(dest);
 });
+
+function isExists (dirPath) {
+    try {
+        fs.statSync(dirPath);
+    } catch (err) {
+        return false;
+    }
+    return true;
+}
+
