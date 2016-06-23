@@ -32,7 +32,11 @@ module.exports = postcss.plugin('postcss-style-guide', function (opts) {
                 colorPalette: palette
             });
             fileWriter.write(params.dest, html);
-            console.log('Successfully created style guide!');
+
+            if (!opts.silent) {
+                console.log('Successfully created style guide!');
+            }
+
             return root;
           }).catch(function (err) {
             console.error('generate err:', err);
