@@ -73,7 +73,7 @@ We can generate color palette from CSS Custom Properties with `@start color` and
 `color.css`:
 
 ```css
-import "button";
+@import "button";
 /* @start color */
 :root {
     --red: #e23B00;
