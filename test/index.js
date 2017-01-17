@@ -153,7 +153,8 @@ test('integration test: exist output', function (t) {
     var opts = {
         name: 'Default theme',
         src: 'test/input.css',
-        dest: 'test/dest/exist/index.html'
+        dest: 'test/dest/exist/index.html',
+        silent: true
     };
     var cwd = process.cwd();
     var src = path.resolve(cwd, 'test/input.css');
