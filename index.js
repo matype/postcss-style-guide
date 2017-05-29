@@ -1,3 +1,4 @@
+var path = require('path');
 var postcss = require('postcss');
 
 var analyzer = require('./lib/analyzer');
@@ -18,7 +19,7 @@ module.exports = postcss.plugin('postcss-style-guide', function (opts) {
         } catch (err) {
             throw err;
         }
-        var maps = analyzer.analyze(root);
+        var maps = analyzer.analyze(root, opts);
         var palette = colorPalette.parse(root.toString());
         var promise = syntaxHighlighter.execute({
             src: params.src,
@@ -34,7 +35,7 @@ module.exports = postcss.plugin('postcss-style-guide', function (opts) {
             fileWriter.write(params.dest, html);
 
             if (!opts.silent) {
-                console.log('Successfully created style guide!');
+                console.log('Successfully created style guide at ' + path.relative(process.cwd(), params.dest) + '!');
             }
 
             return root;
