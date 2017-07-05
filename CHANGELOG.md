@@ -1,3 +1,7 @@
+## 0.14.0
+
+Support multi-file and meta improvements [#50](https://github.com/morishitter/postcss-style-guide/pull/50) by @dwightjack
+
 ## 0.13.0
 
 Update default theme.
